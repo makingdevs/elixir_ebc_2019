@@ -7,9 +7,11 @@ end
 IO.puts result
 
 tuple = {:ok, 512.32}
+tuple2 = {:ok, "hello"}
 
-result = case tuple do
-  {:ok, result} -> result
+result = case tuple2 do
+  {:ok, result} when is_float(result) -> result * 2
+  {:ok, result} when is_binary(result) -> result
   {:error, reason} -> "ERRORZ: #{reason}"
   _ -> "Catch all"
 end
@@ -25,3 +27,8 @@ result = case file do
 end
 
 IO.puts result
+
+case :even do
+  :odd -> "Odd"
+  _ -> "even"
+end
