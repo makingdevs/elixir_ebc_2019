@@ -32,3 +32,12 @@ case :even do
   :odd -> "Odd"
   _ -> "even"
 end
+
+result = cond do
+  2 + 2 == 5 -> "Not true"
+  2 * 2 == 3 -> "Neither"
+  1 + 1 == 2 -> "Truthy"
+  true -> "No way"
+end
+
+IO.puts result
