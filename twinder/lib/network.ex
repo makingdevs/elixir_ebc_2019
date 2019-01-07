@@ -6,7 +6,7 @@ defmodule Twinder.Network do
 
   @url "https://api.github.com/users/{username}/followers"
 
-  def get_users_of(username) do
+  def get_followers_of(username) do
     @url
     |> replace("{username}", username)
     |> HTTPoison.get!()
@@ -21,7 +21,7 @@ defmodule Twinder.Network do
 
   defp obtain_usernames(list_of_users) do
     list_of_users
-    |> map(fn m -> m["login"] end)
+    |> map(&(&1["login"]))
   end
 
   defp generate_users(list_of_usernames) do
