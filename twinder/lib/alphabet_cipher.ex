@@ -1,12 +1,16 @@
 defmodule Twinder.AlphabetCipher do
+  import String, only: [pad_trailing: 3, downcase: 1, upcase: 1]
 
   def encode(message, secret) do
-    secret_pad = String.pad_trailing("", String.length(message), secret)
-    secret_chars = String.to_charlist(String.upcase(secret_pad))
-    message_chars = String.to_charlist(String.upcase(message))
-    substitution_chart = substitution_chart()
-    result = encode(message_chars, secret_chars, substitution_chart, [])
-    List.to_string(result) |> String.downcase
+    secret_chars =
+      pad_trailing("", String.length(message), secret)
+      |> upcase
+      |> to_charlist
+    message_chars = message |> upcase |> to_charlist
+
+    encode(message_chars, secret_chars, substitution_chart(), [])
+    |> List.to_string
+    |> downcase
   end
 
   def decode(_secret_message, _secret) do
