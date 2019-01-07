@@ -7,15 +7,17 @@ defmodule Twinder.Network do
   @url "https://api.github.com/users/{username}/followers"
 
   def get_followers_of(username) do
+    import HTTPoison, only: [get!: 1]
     @url
     |> replace("{username}", username)
-    |> HTTPoison.get!()
+    |> get!()
     |> parse_response
     |> obtain_usernames
     |> generate_users
   end
 
   defp parse_response(%Response{body: body}) do
+    import Poison, only: [decode!: 1]
     body |> Poison.decode!
   end
 
