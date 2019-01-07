@@ -1,6 +1,8 @@
 defmodule Twinder.AlphabetCipher do
   import String, only: [pad_trailing: 3, downcase: 1, upcase: 1]
 
+  @alphabet 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
   def encode(message, secret) do
     secret_chars =
       pad_trailing("", String.length(message), secret)
@@ -19,15 +21,17 @@ defmodule Twinder.AlphabetCipher do
 
   def encode([], [], _substitution_chart, cipher_message), do: cipher_message
   def encode([message_letter | message_chars], [secret_letter | secret_chars], substitution_chart, cipher_message) do
-    {_,_, s} = substitution_chart
-               |> Enum.find(fn {ml, mc, _s} ->
-                 message_letter == ml and secret_letter == mc
-               end)
+    # {_,_, s} = substitution_chart
+    #            |> Enum.find(fn {ml, mc, _s} ->
+    #              message_letter == ml and secret_letter == mc
+    #            end)
+    [s] = for {ml, mc, s} <- substitution_chart,
+      message_letter == ml, secret_letter == mc, do: s
     encode(message_chars, secret_chars, substitution_chart, cipher_message ++ [s])
   end
 
   def substitution_chart do
-    letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    letters = @alphabet
     substitution_chart(letters, length(letters), [])
   end
 
@@ -45,7 +49,7 @@ defmodule Twinder.AlphabetCipher do
   end
 
   def generate_secret({letter_row, letters}) do
-    generate_secret(letter_row, letters, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', [])
+    generate_secret(letter_row, letters, @alphabet, [])
   end
 
   def generate_secret(_, [], [], secrets), do: secrets
