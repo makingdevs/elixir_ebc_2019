@@ -57,6 +57,15 @@ defmodule Twinder.AlphabetCipher do
     substitution_chart(letters, n-1, matrix ++ generate_secret({letter_row, letters}))
   end
 
+  @doc """
+  Rotates a charlist one character.
+
+  ## Examples
+
+      iex> Twinder.AlphabetCipher.rotate('abcde')
+      'bcdea'
+
+  """
   def rotate([h|t] = _alphabet) do
     t ++ [h]
   end

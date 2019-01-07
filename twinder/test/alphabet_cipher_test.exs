@@ -1,5 +1,6 @@
 defmodule Twinder.AlphabetCipher.Test do
   use ExUnit.Case
+  doctest Twinder.AlphabetCipher
 
   alias Twinder.AlphabetCipher
 
