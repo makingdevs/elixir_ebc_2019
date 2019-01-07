@@ -15,19 +15,32 @@ defmodule Twinder.AlphabetCipher do
     |> downcase
   end
 
-  def decode(_secret_message, _secret) do
-    "meetmebythetree"
+  def decode(secret_message, secret) do
+    secret_chars =
+      pad_trailing("", String.length(secret_message), secret)
+      |> upcase
+      |> to_charlist
+    message_chars = secret_message |> upcase |> to_charlist
+
+    decode(message_chars, secret_chars, substitution_chart(), [])
+    |> List.to_string
+    |> downcase
   end
 
   def encode([], [], _substitution_chart, cipher_message), do: cipher_message
   def encode([message_letter | message_chars], [secret_letter | secret_chars], substitution_chart, cipher_message) do
-    # {_,_, s} = substitution_chart
-    #            |> Enum.find(fn {ml, mc, _s} ->
-    #              message_letter == ml and secret_letter == mc
-    #            end)
     [s] = for {ml, mc, s} <- substitution_chart,
       message_letter == ml, secret_letter == mc, do: s
     encode(message_chars, secret_chars, substitution_chart, cipher_message ++ [s])
+  end
+
+  def decode([], [], _substitution_chart, decipher_message), do: decipher_message
+  def decode([message_letter | message_chars], [secret_letter | secret_chars], substitution_chart, decipher_message) do
+    {s, _, _} = substitution_chart
+               |> Enum.find(fn {_ml, mc, s} ->
+                 message_letter == s and secret_letter == mc
+               end)
+    decode(message_chars, secret_chars, substitution_chart, decipher_message ++ [s])
   end
 
   def substitution_chart do
