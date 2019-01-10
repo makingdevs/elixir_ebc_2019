@@ -13,6 +13,8 @@ defmodule Twinder.Plug do
     send_resp(conn, 203, "Done!! ^_^")
   end
 
+  # forward "/users", to: Twinder.User.Router
+
   match _ do
     send_resp(conn, 404, "Not found oops!!!")
   end
