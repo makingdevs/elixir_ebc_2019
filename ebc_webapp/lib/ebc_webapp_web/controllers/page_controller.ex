@@ -5,7 +5,8 @@ defmodule EbcWebappWeb.PageController do
     render(conn, "index.html")
   end
 
-  def hello(conn, _params) do
-    text conn, "Hello Phoenix!!!"
+  def hello(conn, params) do
+    IO.inspect params
+    render(conn, "hello.html")
   end
 end
