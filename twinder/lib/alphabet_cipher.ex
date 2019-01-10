@@ -48,9 +48,7 @@ defmodule Twinder.AlphabetCipher do
     substitution_chart(letters, length(letters), [])
   end
 
-  def substitution_chart(_letters, 0, matrix) do
-    matrix
-  end
+  def substitution_chart(_letters, 0, matrix), do: matrix
   def substitution_chart(letters, n, matrix) do
     letters = rotate(letters)
     [letter_row | _ ] = letters
@@ -58,7 +56,7 @@ defmodule Twinder.AlphabetCipher do
   end
 
   @doc """
-  Rotates a charlist one character.
+  Rotates a charlist one char.
 
   ## Examples
 
