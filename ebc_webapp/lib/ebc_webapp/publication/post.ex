@@ -1,12 +1,13 @@
 defmodule EbcWebapp.Publication.Post do
   use Ecto.Schema
   import Ecto.Changeset
-
+  alias EbcWebapp.Twinder.User
 
   schema "posts" do
     field :body, :string
     field :publication_date, :naive_datetime
     field :title, :string
+    belongs_to :user, User
 
     timestamps()
   end
