@@ -1,4 +1,6 @@
 <h1>Listing Users</h1>
+<h2><%= current_date() %></h2>
+<h3><%= count_users(@users) %></h3>
 
 <table>
   <thead>

@@ -14,7 +14,8 @@ defmodule EbcWebappWeb.UserController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"user" => user_params}) do
+  def create(conn, %{"user" => user_params} = params) do
+    IO.inspect params
     case Twinder.create_user(user_params) do
       {:ok, user} ->
         conn
