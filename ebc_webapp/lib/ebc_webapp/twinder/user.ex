@@ -16,6 +16,7 @@ defmodule EbcWebapp.Twinder.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:username, :full_name, :email, :born_date])
+    |> validate_format(:email, ~r/@/)
     |> validate_required([:username, :full_name, :email, :born_date])
   end
 end
