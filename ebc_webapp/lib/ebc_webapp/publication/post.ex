@@ -15,7 +15,7 @@ defmodule EbcWebapp.Publication.Post do
   @doc false
   def changeset(post, attrs) do
     post
-    |> cast(attrs, [:title, :publication_date, :body])
-    |> validate_required([:title, :publication_date, :body])
+    |> cast(attrs, [:title, :publication_date, :body, :user_id])
+    |> validate_required([:title, :publication_date, :body, :user_id])
   end
 end
