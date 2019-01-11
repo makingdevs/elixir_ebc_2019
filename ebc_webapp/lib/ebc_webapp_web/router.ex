@@ -23,7 +23,8 @@ defmodule EbcWebappWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", EbcWebappWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", EbcWebappWeb do
+    pipe_through :api
+    resources "/users", UserRestController, except: [:new, :edit]
+  end
 end
