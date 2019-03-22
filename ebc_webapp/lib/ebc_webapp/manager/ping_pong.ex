@@ -7,27 +7,32 @@ defmodule EbcWebapp.Twinder.PingPong do
     {ping, pong}
   end
 
-  def ping() do
+  def ping(counter \\ 0) do
     receive do
       {:pong, sender} ->
         IO.puts "PONG"
         :timer.sleep(2000)
         send sender, {:ping, self}
-        ping()
+        ping(counter + 1)
       :exit ->
-        "Ping ended"
+        "Ping ended with #{counter} touches"
     end
   end
 
-  def pong() do
+  def pong(counter \\ 0) do
     receive do
       {:ping, sender} ->
         IO.puts "PING"
         :timer.sleep(2000)
         send sender, {:pong, self}
-        pong()
+        pong(counter + 1)
+      {:counter} ->
+        IO.puts "#{counter} pongs"
+        pong(counter)
+      {:duplicate} ->
+        pong(counter * 2)
       :exit ->
-        "Pong ended"
+        "Pong ended with #{counter} touches"
     end
   end
 
