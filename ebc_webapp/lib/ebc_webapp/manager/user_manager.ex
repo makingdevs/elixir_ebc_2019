@@ -28,4 +28,8 @@ defmodule EbcWebapp.Twinder.UserManager do
     {:noreply, [user | estado]}
   end
 
+  def handle_info(:work, estado) do
+    {:noreply, state}
+  end
+
 end
