@@ -1,31 +1,31 @@
 defmodule EbcWebapp.Twinder.UserManager do
+  use GenServer
 
-  def greet() do
-    receive do
-      :any ->
-        IO.puts "Cualquiera"
-        greet()
-      {a, b} ->
-        IO.puts "#{a} #{b}"
-        greet()
-      :exit ->
-        :noop
-    end
+  # API client
+  def start_link(opts \\ []) do
+    GenServer.start_link(__MODULE__,opts,  [name: __MODULE__])
   end
 
-  def parallel_map(list, fun) when is_list(list) do
-    list
-    |> Enum.map(fn e ->
-      p = spawn(__MODULE__, :operate, [fun])
-      send p, e
-    end)
+  def add_user(user) do
+    GenServer.cast(__MODULE__, {:add, user})
   end
 
-  def operate(fun) do
-    receive do
-      a ->
-        apply(fun, [a])
-    end
+  def list_users() do
+    GenServer.call(__MODULE__, :get)
+  end
+
+  # Server functions
+
+  def init([]) do
+    {:ok, ["ebc"]}
+  end
+
+  def handle_call(:get, _from, estado) do
+    {:reply, estado, estado}
+  end
+
+  def handle_cast({:add, user}, estado) do
+    {:noreply, [user | estado]}
   end
 
 end
